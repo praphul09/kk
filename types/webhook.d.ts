@@ -4,22 +4,35 @@ export type WebhookImage = {
     mime_type: string,
 }
 
+export type WebhookInteraction = {
+    button_reply?: ButtonReply,
+    type:string,
+}
+export type ButtonReply = {
+     id: string,
+     title: string,
+}
+
+export type ButtonReply2 = {
+     text: string,
+     payload: string,
+}
+
 export type WebhookMessage = {
     from: string,
     id: string,
     timestamp: string,
     image?: WebhookImage,
-    type: 'text' | 'reaction' | 'image' | 'interactive',
+    interactive?:WebhookInteraction,
+    button?:ButtonReply2,
+    type: 'text' | 'reaction' | 'image' | 'interactive' | 'button',
 }
 
 export type StatusMessage = {
-    conversation: {},
-    pricing: {},
     recipient_id : string,
     staus: string,
     id: string,
     timestamp: string,
-    errors: [],
     type: 'text' | 'reaction' | 'image' | 'interactive',
 }
 
