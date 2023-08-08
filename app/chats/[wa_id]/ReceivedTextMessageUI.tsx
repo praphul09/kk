@@ -1,4 +1,5 @@
 import { TextMessage } from "../../../types/Message";
+import { InteractiveMessage } from "../../../types/Message";
 import TailIn from "../TailIn";
 
 export default function ReceivedTextMessageUI(props: { textMessage: TextMessage }) {
