@@ -78,8 +78,10 @@ export default function MessageListClient({ messages, from }: { messages: DBMess
                                                         return <ReceivedImageMessageUI message={message} />
                                                     case "interactive":
                                                         return <ReceivedTextMessageUI textMessage={messageBody} type ="interactive" />
+                                                    case "button":
+                                                        return <ReceivedTextMessageUI textMessage={messageBody} type ="button" />    
                                                     default:
-                                                        return <div>Message Yet to build</div>
+                                                        return <ReceivedTextMessageUI textMessage={messageBody} type ="default" /> 
                                                 }
                                             })()
                                         }
