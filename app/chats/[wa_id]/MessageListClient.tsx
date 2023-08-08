@@ -76,6 +76,8 @@ export default function MessageListClient({ messages, from }: { messages: DBMess
                                                         return <ReceivedTextMessageUI textMessage={messageBody as TextMessage} />
                                                     case "image":
                                                         return <ReceivedImageMessageUI message={message} />
+                                                    case "interactive":
+                                                        return <ReceivedTextMessageUI textMessage={messageBody as TextMessage} />
                                                     default:
                                                         console.log({messageBody})
                                                         return <div>Message Yet to build</div>
