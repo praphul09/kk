@@ -8,7 +8,7 @@ export type MessageJson = {
 }
 
 export type InteractionMessageBody = {
-    button_reply?: ButtonReply,
+    button_reply?: ButtonReplyBody,
     type:string,
 }
 
