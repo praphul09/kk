@@ -77,7 +77,8 @@ export default function MessageListClient({ messages, from }: { messages: DBMess
                                                     case "image":
                                                         return <ReceivedImageMessageUI message={message} />
                                                     default:
-                                                        return <div>{messageBody}</div>
+                                                        console.log({messageBody})
+                                                        return <div>Message Yet to build</div>
                                                 }
                                             })()
                                         }
