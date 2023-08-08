@@ -32,9 +32,7 @@ export type InteractiveMessage = MessageJson & {
     interactive: InteractionMessageBody
 }
 
-export type InteractiveMessage = MessageJson & {
-    interactive: InteractionMessageBody
-}
+
 
 export type ButtonMessage = MessageJson & {
     button: ButtonReply2
