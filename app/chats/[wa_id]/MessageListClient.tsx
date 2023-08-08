@@ -77,7 +77,7 @@ export default function MessageListClient({ messages, from }: { messages: DBMess
                                                     case "image":
                                                         return <ReceivedImageMessageUI message={message} />
                                                     default:
-                                                        return <div>Unsupported message</div>
+                                                        return <div>{messageBody}</div>
                                                 }
                                             })()
                                         }
