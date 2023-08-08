@@ -7,8 +7,23 @@ export type MessageJson = {
     type: string,
 }
 
+export type InteractionMessageBody = {
+    button_reply?: ButtonReply,
+    type:string,
+}
+
+export type ButtonReplyBody = {
+     id: string,
+     title: string,
+}
+
+
 export type TextMessageBody = {
     body: string,
+}
+
+export type InteractiveMessage = MessageJson & {
+    interactive: InteractionMessageBody
 }
 
 export type TextMessage = MessageJson & {
