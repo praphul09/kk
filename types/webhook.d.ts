@@ -30,7 +30,7 @@ export type WebhookMessage = {
 
 export type StatusMessage = {
     recipient_id : string,
-    staus: string,
+    status: string,
     id: string,
     timestamp: string,
     type: 'text' | 'reaction' | 'image' | 'interactive',
