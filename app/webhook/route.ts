@@ -128,7 +128,7 @@ export async function POST(request: NextRequest) {
               if (error) {
                 statusmsg[contact.wa_id] == "received"
               }  else {
-                  if (data[data.length - 1]['laststatus'] == "delivered" ||  data[data.length - 1]['laststatus'] == "sent" ||  data[data.length - 1]['laststatus'] == "read") {
+                  if (data[data.length - 1]['laststatus'] == "delivered" ||  data[data.length - 1]['laststatus'] == "sent") {
 
                     let newtime:string = timestamp[contact.wa_id] == undefined || timestamp[contact.wa_id] == 0 ? (new Date()).toString() : new Date((Number(timestamp[contact.wa_id]) * 1000)).toString()
                     console.log((newtime)) 
