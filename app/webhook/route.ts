@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     if (error) throw error
 
     const changes = webhookBody.entry[0].changes;
-    console.log(webhookBody)
+
     if (changes.length > 0) {
       if (changes[0].field === "messages") {
 
@@ -55,7 +55,8 @@ export async function POST(request: NextRequest) {
         const statuses = changeValue.statuses;
         let statusmsg:any = {};
         let timestamp:any = {};
-        
+        let msgdata:any = {};
+
         if (statuses) {
           statuses.map(status => {
             if(!timestamp.hasOwnProperty(status.recipient_id) ) {
@@ -79,7 +80,7 @@ export async function POST(request: NextRequest) {
           }
         }
 
-        console.log(statuses)
+
 
         if (messages) {
         
@@ -89,11 +90,13 @@ export async function POST(request: NextRequest) {
 
               
               if(!timestamp.hasOwnProperty(message.from) ) {
-                timestamp[message.from] = message.timestamp
+                timestamp[message.from] = Number(message.timestamp)
                 statusmsg[message.from] = "received"
+                msgdata[message.from] = message
               } else if(timestamp[message.from] < Number(message.timestamp)){
                 timestamp[message.from] = Number(message.timestamp)
                 statusmsg[message.from] = "received"
+                msgdata[message.from] = message
               }
               
 
@@ -125,12 +128,16 @@ export async function POST(request: NextRequest) {
               if (error) {
                 statusmsg[contact.wa_id] == "received"
               }  else {
+                   console.log(data[data.length - 1]['laststatus']) 
                   if (data[data.length - 1]['laststatus'] == "delivered" ||  data[data.length - 1]['laststatus'] == "sent") {
 
                     let newtime:string = timestamp[contact.wa_id] == undefined || timestamp[contact.wa_id] == 0 ? (new Date()).toString() : (Number(timestamp[contact.wa_id]) * 1000).toString()
-                    
-                    if(toTimestamp(newtime) - toTimestamp( data[data.length - 1]['last_message_at']) < 5){
-                      statusmsg[contact.wa_id] = "automsg"
+                    console.log(toTimestamp(newtime)) 
+                    console.log( toTimestamp( data[data.length - 1]['last_message_at']) ) 
+                    if(toTimestamp(newtime) - toTimestamp( data[data.length - 1]['last_message_at']) < 8){
+                      if (msgdata[contact.wa_id].type == "text" && msgdata[contact.wa_id].body.length > 60){
+                        statusmsg[contact.wa_id] = "automsg";
+                      }
                     }
                   }
               }
