@@ -128,15 +128,14 @@ export async function POST(request: NextRequest) {
               if (error) {
                 statusmsg[contact.wa_id] == "received"
               }  else {
-                   console.log(data[data.length - 1]['laststatus']) 
-                  if (data[data.length - 1]['laststatus'] == "delivered" ||  data[data.length - 1]['laststatus'] == "sent" ||   data[data.length - 1]['laststatus'] == "read") {
+                  if (data[data.length - 1]['laststatus'] == "delivered" ||  data[data.length - 1]['laststatus'] == "sent" ||  data[data.length - 1]['laststatus'] == "read") {
 
                     let newtime:string = timestamp[contact.wa_id] == undefined || timestamp[contact.wa_id] == 0 ? (new Date()).toString() : new Date((Number(timestamp[contact.wa_id]) * 1000)).toString()
                     console.log((newtime)) 
                     console.log(toTimestamp(newtime)) 
                     console.log( toTimestamp( data[data.length - 1]['last_message_at']) ) 
                     if(toTimestamp(newtime) - toTimestamp( data[data.length - 1]['last_message_at']) < 8){
-                      if (msgdata[contact.wa_id].type == "text" && msgdata[contact.wa_id].body.length > 60){
+                      if (msgdata[contact.wa_id].type == "text" && msgdata[contact.wa_id].text.body.length > 60){
                         statusmsg[contact.wa_id] = "automsg";
                       }
                     }
