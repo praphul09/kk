@@ -127,9 +127,9 @@ export async function POST(request: NextRequest) {
               .from(DBTables.Contacts)
               .upsert({
                 wa_id: contact.wa_id,
-                profile_name: contact.profile.name + 'lk',
+                profile_name: contact.profile.name,
                 last_message_at: timestamp[contact.wa_id] == undefined || timestamp[contact.wa_id] == 0 ? new Date(): new Date(timestamp[contact.wa_id] * 1000),
-                laststatus:'received'
+                laststatus:statusmsg[contact.wa_id]
               })
             if (error) throw error
           }
