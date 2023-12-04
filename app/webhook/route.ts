@@ -48,6 +48,7 @@ export async function POST(request: NextRequest) {
     console.log(webhookBody)
     if (changes.length > 0) {
       if (changes[0].field === "messages") {
+
         const changeValue = changes[0].value;
         const contacts = changeValue.contacts;
         const messages = changeValue.messages;
@@ -65,6 +66,17 @@ export async function POST(request: NextRequest) {
               statusmsg[status.recipient_id] = status.status
             }
           })
+
+          for (const [key, value] of Object.entries(timestamp)) {
+            let { error } = await supabase
+            .from(DBTables.Contacts)
+            .upsert({
+              wa_id: key,
+              last_message_at: new Date(timestamp[key] * 1000),
+              laststatus:statusmsg[key]
+            })
+            if (error) throw error
+          }
         }
 
         console.log(statuses)
