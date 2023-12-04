@@ -43,28 +43,48 @@ export async function POST(request: NextRequest) {
         return { payload: entry }
       }))
     if (error) throw error
+
     const changes = webhookBody.entry[0].changes;
+    console.log(webhookBody)
     if (changes.length > 0) {
       if (changes[0].field === "messages") {
         const changeValue = changes[0].value;
         const contacts = changeValue.contacts;
         const messages = changeValue.messages;
-        if (contacts && contacts.length > 0) {
-          for (const contact of contacts) {
-            let { error } = await supabase
-              .from(DBTables.Contacts)
-              .upsert({
-                wa_id: contact.wa_id,
-                profile_name: contact.profile.name,
-                last_message_at: new Date()
-              })
-            if (error) throw error
-          }
+        const statuses = changeValue.statuses;
+        let statusmsg:any = {};
+        let timestamp:any = {};
+        
+        if (statuses) {
+          statuses.map(status => {
+            if(!timestamp.hasOwnProperty(status.recipient_id) ) {
+              timestamp[status.recipient_id] = status.timestamp
+              statusmsg[status.recipient_id] = status.status
+            } else if(timestamp[status.recipient_id] < Number(status.timestamp)){
+              timestamp[status.recipient_id] = Number(status.timestamp)
+              statusmsg[status.recipient_id] = status.status
+            }
+          })
         }
+
+        console.log(statuses)
+
         if (messages) {
+        
           let { error } = await supabase
             .from(DBTables.Messages)
             .insert(messages.map(message => {
+
+              
+              if(!timestamp.hasOwnProperty(message.from) ) {
+                timestamp[message.from] = message.timestamp
+                statusmsg[message.from] = "received"
+              } else if(timestamp[message.from] < Number(message.timestamp)){
+                timestamp[message.from] = Number(message.timestamp)
+                statusmsg[message.from] = "received"
+              }
+              
+
               return {
                 chat_id: message.from,
                 message: message,
@@ -73,14 +93,54 @@ export async function POST(request: NextRequest) {
               }
             }))
           if (error) throw error
+          
           for (const message of messages) {
             if (message.type === 'image') {
               await downloadMedia(message)
             }
           }
         }
+
+        if (contacts && contacts.length > 0) {
+          
+          for (const contact of contacts) {
+            if (statusmsg[contact.wa_id] == "received") {
+              const { data: data , error } = await supabase
+              .from(DBTables.Contacts)
+              .select('laststatus,last_message_at')
+              .eq('wa_id', contact.wa_id)
+              .order('last_message_at', { ascending: false })
+              if (error) {
+                statusmsg[contact.wa_id] == "received"
+              }  else {
+                  if (data[data.length - 1]['laststatus'] == "delivered" ||  data[data.length - 1]['laststatus'] == "sent") {
+
+                    let newtime:string = timestamp[contact.wa_id] == undefined || timestamp[contact.wa_id] == 0 ? (new Date()).toString() : (Number(timestamp[contact.wa_id]) * 1000).toString()
+                    
+                    if(toTimestamp(newtime) - toTimestamp( data[data.length - 1]['last_message_at']) < 5){
+                      statusmsg[contact.wa_id] = "automsg"
+                    }
+                  }
+              }
+            }
+            let { error } = await supabase
+              .from(DBTables.Contacts)
+              .upsert({
+                wa_id: contact.wa_id,
+                profile_name: contact.profile.name,
+                last_message_at: timestamp[contact.wa_id] == undefined || timestamp[contact.wa_id] == 0 ? new Date(): new Date(timestamp[contact.wa_id] * 1000),
+                laststatus:statusmsg[contact.wa_id]
+              })
+            if (error) throw error
+          }
+        }
       }
     }
   }
   return new NextResponse()
+}
+
+function toTimestamp(strDate:string){
+  var datum = Date.parse(strDate);
+  return datum/1000;
 }
