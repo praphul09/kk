@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import TailIn from '../TailIn'
+import TailIn from '../../TailIn'
 
 export default function TailWrapper({ children, showTail, isSent }: { children: ReactElement, showTail: boolean, isSent: boolean }) {
     return (

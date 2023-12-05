@@ -1,19 +1,23 @@
 'use client'
 
 import { createContext, Dispatch, ReactElement, Reducer, useContext, useReducer } from "react";
-import { Contact } from "../../types/contact";
+import { Contact } from "../../../types/contact";
+import { table } from "console";
 
 type ContactState = {
     contacts: Contact[],
+    city: string,
     current?: Contact,
 }
 
 type Action = {
     type: string,
-    waId: number,
+    waId?: number,
 }
 
 export const UPDATE_CURRENT_CONTACT = 'UPDATE_CURRENT_CONTACT'
+export const UPDATE_CURRENT_CITY = 'UPDATE_CURRENT_CITY'
+export const UPDATE_CONTACTS = "UPDATE_CONTACTS"
 
 const reducer: Reducer<ContactState, Action> = (state, action) => {
     switch (action.type) {
@@ -25,7 +29,7 @@ const reducer: Reducer<ContactState, Action> = (state, action) => {
                     current = contact
                 }
             })
-            return { contacts: state.contacts, current }
+            return { contacts: state.contacts, city:state.city, current }
         default:
             return state;
     }
@@ -34,8 +38,8 @@ const reducer: Reducer<ContactState, Action> = (state, action) => {
 export const ContactsContext = createContext<ContactState | null>(null)
 export const CurrentContactDispatchContext = createContext<Dispatch<Action> | null>(null)
 
-export function ContactContextProvider({ children, contacts }: { children: ReactElement, contacts: Contact[] }) {
-    const [state, dispatch] = useReducer(reducer, { contacts });
+export function ContactContextProvider({ children, contacts, city }: { children: ReactElement, contacts: Contact[], city :string}) {
+    const [state, dispatch] = useReducer(reducer, { contacts, city });
     return (
         <ContactsContext.Provider value={state}>
             <CurrentContactDispatchContext.Provider value={dispatch}>

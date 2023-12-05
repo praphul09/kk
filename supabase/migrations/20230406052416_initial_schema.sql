@@ -3,6 +3,9 @@ create table "public"."contacts" (
     "profile_name" character varying,
     "created_at" timestamp with time zone default now(),
     "last_message_at" timestamp with time zone default now()
+    "CARD" text,
+    "laststatus" text,
+    "dispname" text,
 );
 
 

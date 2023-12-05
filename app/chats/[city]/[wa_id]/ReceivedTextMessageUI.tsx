@@ -1,7 +1,7 @@
-import { TextMessage } from "../../../types/Message";
-import { InteractiveMessage  } from "../../../types/Message";
-import { ButtonMessage  } from "../../../types/Message";
-import TailIn from "../TailIn";
+import { TextMessage } from "../../../../types/Message";
+import { InteractiveMessage  } from "../../../../types/Message";
+import { ButtonMessage  } from "../../../../types/Message";
+import TailIn from "../../TailIn";
 
 export default function ReceivedTextMessageUI(props: { textMessage: any ,type:string}) {
     const { textMessage,type } = props

@@ -36,18 +36,27 @@ export interface Database {
     Tables: {
       contacts: {
         Row: {
+          dispname: string | null
+          laststatus: string | null
+          CARD:string | null
           created_at: string | null
           last_message_at: string | null
           profile_name: string | null
           wa_id: number
         }
         Insert: {
+          dispname?: string | null
+          laststatus?: string | null
+          CARD?:string | null
           created_at?: string | null
           last_message_at?: string | null
           profile_name?: string | null
           wa_id: number
         }
         Update: {
+          dispname?: string | null
+          laststatus?: string | null
+          CARD?:string | null
           created_at?: string | null
           last_message_at?: string | null
           profile_name?: string | null

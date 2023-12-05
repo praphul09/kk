@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect } from 'react'
-import MoreIcon from '../../../components/icons/MoreIcon'
-import BlankUser from '../BlankUser'
+import MoreIcon from '../../../../components/icons/MoreIcon'
+import BlankUser from '../../BlankUser'
 import { UPDATE_CURRENT_CONTACT, useContacts, useCurrentContactDispatch } from '../CurrentContactContext'
 
 export default function ChatHeader({ waId }: { waId: string }) {
