@@ -20,6 +20,9 @@ export default function ChatHeader({ waId }: { waId: string }) {
                 <div className='text-primary-strong flex-grow'>
                     {currentContact?.current?.profile_name}
                 </div>
+                <div className='text-primary-strong flex-grow'>
+                    {currentContact?.current?.wa_id}
+                </div>
                 <MoreIcon className='text-panel-header-icon' />
             </header>
         </div>

@@ -7,19 +7,19 @@ import { createClient } from "../../../utils/supabase-browser";
 import { useState } from "react";
 
 const updateToSeen = async (contact:Contact ) => {
-    console.log("hello")
-    const supabase = createClient()
-    let { error } = await supabase
-              .from(DBTables.Contacts)
-              .upsert({
-                wa_id: contact.wa_id,
-                profile_name: contact.profile_name,
-                CARD: contact.CARD,
-                last_message_at: (new Date(Date.now())).toDateString(),
-                laststatus:"seen",
-                dispname: contact.dispname
-              })
-    if(error) throw error
+    if (contact.laststatus == "received" || contact.laststatus == "automsg"){
+        const supabase = createClient()
+        let { error } = await supabase
+                .from(DBTables.Contacts)
+                .upsert({
+                    wa_id: contact.wa_id,
+                    profile_name: contact.profile_name,
+                    CARD: contact.CARD,
+                    laststatus:"seen",
+                    dispname: contact.dispname
+                })
+        if(error) throw error
+    }
 }
 
 export default function ContactUI(props: { contact: any, city:string }) {
