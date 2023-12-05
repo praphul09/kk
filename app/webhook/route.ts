@@ -130,7 +130,9 @@ export async function POST(request: NextRequest) {
               }  else {
                   if (data[data.length - 1]['laststatus'] == "delivered" ||  data[data.length - 1]['laststatus'] == "sent") {
 
+
                     let newtime:string = timestamp[contact.wa_id] == undefined || timestamp[contact.wa_id] == 0 ? (Date.now()).toString() : new Date((Number(timestamp[contact.wa_id]) * 1000)).toString()
+
                     console.log((newtime)) 
                     console.log(toTimestamp(newtime)) 
                     console.log( toTimestamp( data[data.length - 1]['last_message_at']) ) 
@@ -147,7 +149,9 @@ export async function POST(request: NextRequest) {
               .upsert({
                 wa_id: contact.wa_id,
                 profile_name: contact.profile.name,
+
                 last_message_at: timestamp[contact.wa_id] == undefined || timestamp[contact.wa_id] == 0 ? Date.now(): new Date(timestamp[contact.wa_id] * 1000),
+
                 laststatus:statusmsg[contact.wa_id]
               })
             if (error) throw error
@@ -162,4 +166,6 @@ export async function POST(request: NextRequest) {
 function toTimestamp(strDate:string){
   var datum = Date.parse(strDate);
   return datum/1000;
+
 }
+
