@@ -21,7 +21,7 @@ export default function ChatContacts() {
 
         headers.append('Content-Type', 'application/json');
 
-        const response = await fetch(`http://ec2-65-1-92-28.ap-south-1.compute.amazonaws.com/getData`, {
+        const response = await fetch(`http://ec2-3-110-203-242.ap-south-1.compute.amazonaws.com/getData`, {
             method: 'POST',
             body: JSON.stringify({ city: contactState?.city }),
             headers: headers
