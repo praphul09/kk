@@ -21,8 +21,8 @@ export default function ChatContacts() {
 
         headers.append('Content-Type', 'application/json');
 
-        const response = await fetch(`https://4qwmqa32e8.execute-api.ap-south-1.amazonaws.com/default/dbops`, {
-            method: 'POST',
+         const response = await fetch(`https://4qwmqa32e8.execute-api.ap-south-1.amazonaws.com/default/dbops`, {
+           method: 'POST',
             body: JSON.stringify({ type : 'getData', city: contactState?.city }),
             headers: headers
         })
