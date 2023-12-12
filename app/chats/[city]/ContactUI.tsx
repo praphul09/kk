@@ -7,7 +7,7 @@ import { createClient } from "../../../utils/supabase-browser";
 import { useState } from "react";
 
 const updateToSeen = async (contact:Contact ) => {
-    if (contact.laststatus == "received" || contact.laststatus == "automsg"){
+    if (contact.laststatus == "received"){
         const supabase = createClient()
         let { error } = await supabase
                 .from(DBTables.Contacts)

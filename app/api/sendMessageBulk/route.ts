@@ -37,8 +37,8 @@ async function sendWhatsAppMessageTemplate(to: string, template: string, imageli
     if (!res.ok) {
         const responseStatus = await res.status
         const response = await res.text()
-        throw new Error(responseStatus + response);
-    }
+        console.log(to)
+    } 
 
     const payload2 = {
         to: to,
@@ -63,8 +63,6 @@ async function sendWhatsAppMessageTemplate(to: string, template: string, imageli
             chat_id: Number.parseInt(response.contacts[0].wa_id),
         })
     
-    console.log(supabaseResponse)
-
     const contacts = response.contacts;
     if (contacts && contacts.length > 0) {
         for (const contact of contacts) {
@@ -73,7 +71,7 @@ async function sendWhatsAppMessageTemplate(to: string, template: string, imageli
             .upsert({
             wa_id: contact.wa_id,
             profile_name: "",
-            last_message_at: Date.now(),
+            last_message_at: new Date().toISOString(),
             CARD: city,
             laststatus:"dispatched_" + template,
             dispname: dispname
@@ -86,7 +84,6 @@ async function sendWhatsAppMessageTemplate(to: string, template: string, imageli
 
 export async function POST(request: NextRequest) {
     const requestBody = await request.json()
-    console.log('requestBody', requestBody)
     await sendWhatsAppMessageTemplate(requestBody.to, requestBody.template, requestBody.image, requestBody.city, requestBody.dispname)
     return new NextResponse()
 }

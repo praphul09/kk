@@ -19,7 +19,7 @@ export default async function ChatsLayout({ children }: {
     if (error) throw error
     */
 
-    const res =  await fetch(`http://ec2-3-110-30-44.ap-south-1.compute.amazonaws.com/getTable`, { cache: 'no-store' });
+    const res =  await fetch(`https://4qwmqa32e8.execute-api.ap-south-1.amazonaws.com/default/dbops?type=getTable`, { cache: 'no-store' });
     const data = await res.json();
     const tables = data.tables
     return (

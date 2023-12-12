@@ -21,9 +21,9 @@ export default function ChatContacts() {
 
         headers.append('Content-Type', 'application/json');
 
-        const response = await fetch(`http://ec2-3-110-30-44.ap-south-1.compute.amazonaws.com/getData`, {
+        const response = await fetch(`https://4qwmqa32e8.execute-api.ap-south-1.amazonaws.com/default/dbops`, {
             method: 'POST',
-            body: JSON.stringify({ city: contactState?.city }),
+            body: JSON.stringify({ type : 'getData', city: contactState?.city }),
             headers: headers
         })
         if (response.status === 200) {
@@ -37,12 +37,11 @@ export default function ChatContacts() {
                     headers: headers
                 })
                 if (response.status === 200) {
-                    console.log(contact['PhoneNumber'])
                     setName('')
                     setTemplate('')
                     setImage('')
                 } else {
-                    throw new Error(`Request failed with status code ${response.status}`);
+                    console.log(response.status)
                 }
             }));
            
