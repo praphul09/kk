@@ -21,7 +21,16 @@ async function sendWhatsAppMessageTemplate(to: string, template: string, imageli
                     }
                   }
                 ]
-            }]
+            },
+                           {
+        "type": "body",
+        "parameters": [
+          {
+            "type": "text",
+            "text": dispname
+          }]
+            }
+                          ]
         }
     };
     const headers = {
