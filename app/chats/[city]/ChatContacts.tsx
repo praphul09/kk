@@ -33,7 +33,7 @@ export default function ChatContacts() {
             await Promise.all(data.data.map(async contact => {
                 const response = await fetch('/api/sendMessageBulk', {
                     method: 'POST',
-                    body: JSON.stringify({ to: contact['PhoneNumber'],  template,  image : "https://storage.googleapis.com/schoolinfo-bucket/images/"  + contact['Code'] + ".jpg", city: contactState?.city, dispname: contact['Title']}),
+                    body: JSON.stringify({ to: contact['PhoneNumber'],  template,  image : "https://storage.googleapis.com/schoolinfo-bucket/images/1.jpg", city: contactState?.city, dispname: contact['Title']}),
                     headers: headers
                 })
                 if (response.status === 200) {
