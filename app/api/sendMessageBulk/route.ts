@@ -62,6 +62,7 @@ async function sendWhatsAppMessageTemplate(to: string, template: string, imageli
     const msgToPut: any = structuredClone(payload2)
 
     const response = await res.json()
+    console.log(response)
     const wamId = response.messages[0].id;
     msgToPut['id'] = wamId
     const supabase = createServiceClient()
