@@ -47,6 +47,7 @@ async function sendWhatsAppMessageTemplate(to: string, template: string, imageli
         const responseStatus = await res.status
         const response = await res.text()
         console.log(to)
+        console.log(response)
     } 
 
     const payload2 = {
