@@ -31,7 +31,7 @@ export default function ChatContacts() {
             const data:{data:any[]} = await response.json();
 
             await Promise.all(data.data.map(async contact => {
-                let imglink = "https://storage.googleapis.com/schoolinfo-bucket/images/" + contact['Code'] + ".jpg"
+                let imglink = "https://storage.googleapis.com/schoolinfo-bucket/images/" + contact['Code'] + ".pdf"
                 console.log(imglink)
                 const response = await fetch('/api/sendMessageBulk', {
                     method: 'POST',
