@@ -15,8 +15,8 @@ async function sendWhatsAppMessageTemplate(to: string, template: string, imageli
                 "type": "header",
                 "parameters": [
                   {
-                    "type": "image",
-                    "image": {
+                    "type": "document",
+                    "document": {
                       "link": imagelink
                     }
                   }
